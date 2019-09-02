@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_web/material.dart';
-import '../helper/post.dart';
+import '../controller/post.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -11,7 +11,7 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  Future<Post> post;
+  Future<List<Post>> post;
   int count = 1;
 
   @override
@@ -25,80 +25,113 @@ class _FirstPageState extends State<FirstPage> {
     post = fetchPost(count);
   }
 
+  MediaQueryData queryData;
+
   Widget build(BuildContext context) {
+    queryData = MediaQuery.of(context);
+    print(queryData);
+
     return Scaffold(
       appBar: AppBar(
-          title: Text('Admin Console',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-              ))),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('',
-                  style: TextStyle(
-                    fontSize: 10,
-                  )),
-              Text('Table',
-                  style: TextStyle(
-                    fontSize: 25,
-                  )),
-              Text('',
-                  style: TextStyle(
-                    fontSize: 30,
-                  )),
-              FutureBuilder<Post>(
-                future: post,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    print(snapshot.data.title);
-                    return Table(
-                      defaultColumnWidth: FixedColumnWidth(250.0),
-                      border: TableBorder(
-                        horizontalInside: BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                        verticalInside: BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
-                        ),
-                      ),
-                      children: [
-                        _buildTableRow("userId, id, title, body"),
-                        _buildTableRow(snapshot.data.userId.toString() +
-                            "," +
-                            snapshot.data.id.toString() +
-                            "," +
-                            snapshot.data.title.toString() +
-                            "," +
-                            snapshot.data.body.toString()),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return CircularProgressIndicator();
-                },
+        title: Text(
+          'Admin Console',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.border_all),
+        //     onPressed: () => setState(() {}),
+        //   )
+        // ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Admin Header', style: TextStyle(fontSize: 25.0)),
+              decoration: BoxDecoration(
+                color: Colors.blue,
               ),
-              Container(
-                  margin: EdgeInsets.all(10.0),
-                  child: RaisedButton(
-                      onPressed: () {
-                        handleClick();
-                        setState(() {});
+            ),
+            ListTile(
+              title: Text('Item 1', style: TextStyle(fontSize: 20.0)),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                setState(() {});
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2', style: TextStyle(fontSize: 20.0)),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                setState(() {});
+                Navigator.pushNamed(context, '/second');
+              },
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            Container(
+                margin: EdgeInsets.all(15.0),
+                alignment: Alignment.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Table',
+                        style: TextStyle(
+                          fontSize: 25,
+                        )),
+                    FutureBuilder<List<Post>>(
+                      future: post,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Container();
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
+                        List<Post> postList = snapshot.data;
+                        return Table(
+                            defaultColumnWidth: FlexColumnWidth(150.0),
+                            border: TableBorder(
+                              horizontalInside: BorderSide(
+                                color: Colors.black,
+                                style: BorderStyle.solid,
+                                width: 1.0,
+                              ),
+                            ),
+                            children: postList.map((item) {
+                              return _buildTableRow(item.id.toString() +
+                                  "," +
+                                  item.name.toString() +
+                                  "," +
+                                  item.username.toString() +
+                                  "," +
+                                  item.email.toString());
+                            }).toList());
                       },
-                      child: Text('Post'))),
-            ],
-          )
-        ],
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(0),
+                        child: RaisedButton(
+                            onPressed: () {
+                              handleClick();
+                              setState(() {});
+                            },
+                            child: Text('Post',
+                                style: TextStyle(fontSize: 20.0)))),
+                  ],
+                ))
+          ],
+        ),
       ),
     );
   }
@@ -107,8 +140,8 @@ class _FirstPageState extends State<FirstPage> {
     return TableRow(
       children: listOfNames.split(',').map((name) {
         return Container(
-          alignment: Alignment.center,
-          child: Text(name, style: TextStyle(fontSize: 20.0)),
+          alignment: Alignment.centerLeft,
+          child: Text(name, style: TextStyle(fontSize: 15.0)),
           padding: EdgeInsets.all(8.0),
         );
       }).toList(),
