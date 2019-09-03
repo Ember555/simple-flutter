@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_web/material.dart';
-import '../controller/post.dart';
+import '../controller/list.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -12,29 +12,26 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   Future<List<Post>> post;
-  int count = 1;
 
   @override
   void initState() {
     super.initState();
-    post = fetchPost(count);
+    post = fetchPost();
   }
 
   void handleClick() {
-    count++;
-    post = fetchPost(count);
+    post = fetchPost();
   }
 
   MediaQueryData queryData;
 
   Widget build(BuildContext context) {
     queryData = MediaQuery.of(context);
-    print(queryData);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Admin Console',
+          'List Page',
           style: TextStyle(
             fontSize: 25,
             fontWeight: FontWeight.w600,
@@ -52,13 +49,13 @@ class _FirstPageState extends State<FirstPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Admin Header', style: TextStyle(fontSize: 25.0)),
+              child: Text('Header', style: TextStyle(fontSize: 25.0)),
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
             ),
             ListTile(
-              title: Text('Item 1', style: TextStyle(fontSize: 20.0)),
+              title: Text('List', style: TextStyle(fontSize: 20.0)),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {});
@@ -66,7 +63,7 @@ class _FirstPageState extends State<FirstPage> {
               },
             ),
             ListTile(
-              title: Text('Item 2', style: TextStyle(fontSize: 20.0)),
+              title: Text('Create', style: TextStyle(fontSize: 20.0)),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {});
@@ -86,48 +83,48 @@ class _FirstPageState extends State<FirstPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Table',
+                    Container(
+                      margin: EdgeInsets.only(bottom: 10.0),
+                      child: Text(
+                        'List',
                         style: TextStyle(
-                          fontSize: 25,
-                        )),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
                     FutureBuilder<List<Post>>(
                       future: post,
                       builder: (context, snapshot) {
                         if (!snapshot.hasData) {
-                          return Container();
+                          return Container(child: Text('no data'));
                         } else if (snapshot.hasError) {
                           return Text("${snapshot.error}");
                         }
                         List<Post> postList = snapshot.data;
                         return Table(
                             defaultColumnWidth: FlexColumnWidth(150.0),
-                            border: TableBorder(
-                              horizontalInside: BorderSide(
-                                color: Colors.black,
-                                style: BorderStyle.solid,
-                                width: 1.0,
-                              ),
-                            ),
                             children: postList.map((item) {
                               return _buildTableRow(item.id.toString() +
                                   "," +
                                   item.name.toString() +
                                   "," +
-                                  item.username.toString() +
-                                  "," +
-                                  item.email.toString());
+                                  item.quota.toString());
                             }).toList());
                       },
                     ),
                     Container(
-                        margin: EdgeInsets.all(0),
-                        child: RaisedButton(
-                            onPressed: () {
-                              handleClick();
-                              setState(() {});
-                            },
-                            child: Text('Post',
-                                style: TextStyle(fontSize: 20.0)))),
+                      margin: EdgeInsets.only(top: 20.0),
+                      child: RaisedButton(
+                        onPressed: () {
+                          handleClick();
+                          setState(() {});
+                        },
+                        child: Text(
+                          'Post',
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                    ),
                   ],
                 ))
           ],
@@ -138,11 +135,19 @@ class _FirstPageState extends State<FirstPage> {
 
   TableRow _buildTableRow(String listOfNames) {
     return TableRow(
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        gradient: LinearGradient(
+            colors: [Colors.grey[200], Colors.grey[300]],
+            begin: Alignment.centerRight,
+            end: Alignment(1.0, 1.0)),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      ),
       children: listOfNames.split(',').map((name) {
         return Container(
           alignment: Alignment.centerLeft,
           child: Text(name, style: TextStyle(fontSize: 15.0)),
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(10.0),
         );
       }).toList(),
     );

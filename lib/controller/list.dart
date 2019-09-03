@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List<Post>> fetchPost(int count) async {
+Future<List<Post>> fetchPost() async {
   http.Response response =
-      await http.get('https://jsonplaceholder.typicode.com/users');
+      await http.get('https://virtserver.swaggerhub.com/nguansak/lucky-draw/1.0.0/rewardItem');
   List responseJson = json.decode(response.body);
 
   if (response.statusCode == 200) {
@@ -16,19 +16,17 @@ Future<List<Post>> fetchPost(int count) async {
 }
 
 class Post {
-  final int id;
+  final String id;
   final String name;
-  final String username;
-  final String email;
+  final int quota;
 
-  Post({this.id, this.name, this.username, this.email});
+  Post({this.id, this.name, this.quota});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
       id: json['id'],
       name: json['name'],
-      username: json['username'],
-      email: json['email'],
+      quota: json['quota'],
     );
   }
 }

@@ -2,7 +2,7 @@
 
 ### activate package
 
-    flutter packages pub global activate {projectName}
+    flutter packages pub global activate webdev
 
 ## update package
 
@@ -10,4 +10,8 @@
 
 ## run project
 
-    flutter pub global run {projectName} serve
+    flutter pub global run webdev serve
+
+## reference
+
+    https://medium.com/jlouage/flutter-boxdecoration-cheat-sheet-72cedaa1ba20
