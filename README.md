@@ -12,6 +12,6 @@
 
     flutter pub global run webdev serve
 
-## reference
+## migration
 
-    https://medium.com/jlouage/flutter-boxdecoration-cheat-sheet-72cedaa1ba20
+    https://github.com/flutter/flutter_web/blob/master/docs/migration_guide.md
