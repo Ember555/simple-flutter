@@ -1,4 +1,5 @@
 import 'package:flutter_web/material.dart';
+import './components/thirdPage.dart';
 import './components/secondPage.dart';
 import './components/firstPage.dart';
 
@@ -14,6 +15,7 @@ void main() {
     routes: {
       '/': (context) => FirstPage(),
       '/second': (context) => SecondScreen(),
+      '/third': (context) => DrawPage(),
     },
   ));
 }

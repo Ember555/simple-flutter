@@ -70,6 +70,14 @@ class _FirstPageState extends State<FirstPage> {
                 Navigator.pushNamed(context, '/second');
               },
             ),
+            ListTile(
+              title: Text('Third', style: TextStyle(fontSize: 20.0)),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                setState(() {});
+                Navigator.pushNamed(context, '/third');
+              },
+            ),
           ],
         ),
       ),

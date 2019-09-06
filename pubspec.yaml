@@ -9,6 +9,7 @@ dependencies:
   flutter_web: any
   flutter_web_ui: any
   http: any
+  transparent_image: ^1.0.0
 
 dev_dependencies:
   build_runner: ^1.5.0
@@ -42,3 +43,9 @@ flutter:
       fonts:
         - asset: "fonts/MaterialIcons-Regular.ttf"
           weight: 700
+    
+  assets:
+    - images/Mystery.png
+    - images/error.jpg
+    - images/d290f1ee-6c54-4b01-90e6-d701748f0851.png
+    - images/wheel.png
