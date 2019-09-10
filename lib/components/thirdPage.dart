@@ -1,5 +1,4 @@
 import 'package:flutter_web/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'dart:async';
 import '../controller/draw.dart';
 
@@ -121,12 +120,18 @@ class _DrawPage extends State<DrawPage> with TickerProviderStateMixin {
                       } else {
                         return Column(
                           children: <Widget>[
-                            Image.asset(
-                              'images/error.jpg',
-                              height: 200.0,
-                              fit: BoxFit.cover,
+                            Padding(
+                              padding: EdgeInsets.only(top:8.0),
+                              child: Image.asset(
+                                'images/error.jpg',
+                                height: 150.0,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                            Text(snapshot.data.message)
+                            Padding(
+                                padding: EdgeInsets.only(top:8.0),
+                                child: Text(snapshot.data.message,
+                                    style: TextStyle(fontSize: 20.0)))
                           ],
                         );
                       }
@@ -184,7 +189,7 @@ class _DrawPage extends State<DrawPage> with TickerProviderStateMixin {
                       ? null
                       : () async {
                           if (_buttonState == 'Back') {
-                            await Navigator.pushNamed(context, '/');
+                            await Navigator.pushNamed(context, '/third');
                           }
                           setState(() {
                             _isButtonDisabled = true;

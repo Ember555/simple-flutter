@@ -3,9 +3,9 @@ import 'package:http/http.dart' as http;
 
 Future<Post> drawPost() async {
   http.Response response = await http.post(
-      'https://virtserver.swaggerhub.com/nguansak/lucky-draw/1.0.1/reward/draw');
+      'https://luckydraw-api-fydvnltgua-an.a.run.app/reward/draw', body: {'playerId': 'test'});
 
-  if (response.statusCode == 200) {
+  if (response.statusCode == 200 || response.statusCode == 400) {
     // If the call to the server was successful, parse the JSON.
     return Post.fromJson(json.decode(response.body));
   } else {
