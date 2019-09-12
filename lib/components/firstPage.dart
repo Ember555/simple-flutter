@@ -37,12 +37,6 @@ class _FirstPageState extends State<FirstPage> {
             fontWeight: FontWeight.w600,
           ),
         ),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(Icons.border_all),
-        //     onPressed: () => setState(() {}),
-        //   )
-        // ],
       ),
       drawer: Drawer(
         child: ListView(

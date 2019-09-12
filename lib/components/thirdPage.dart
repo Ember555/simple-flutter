@@ -37,11 +37,6 @@ class _DrawPage extends State<DrawPage> with TickerProviderStateMixin {
       });
   }
 
-  @override
-  // void dispose() {
-  //   _controller.dispose();
-  // }
-
   void handleDraw() {
     post = drawPost();
   }
@@ -147,8 +142,6 @@ class _DrawPage extends State<DrawPage> with TickerProviderStateMixin {
                         ],
                       );
                     }
-
-                    // By default, show a loading spinner.
                     return AnimatedBuilder(
                       animation: _controller,
                       child: Column(children: <Widget>[
