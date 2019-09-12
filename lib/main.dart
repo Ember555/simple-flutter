@@ -1,4 +1,4 @@
-import 'package:flutter_web/material.dart';
+import 'package:flutter/material.dart';
 import './components/thirdPage.dart';
 import './components/secondPage.dart';
 import './components/firstPage.dart';
