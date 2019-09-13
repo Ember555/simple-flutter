@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:animator/animator.dart';
+import 'package:animated_background/animated_background.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase/firestore.dart' as fs;
 import 'package:firebase/firebase.dart';
@@ -11,7 +11,7 @@ class ForthPage extends StatefulWidget {
   }
 }
 
-class _ForthPageState extends State<ForthPage> {
+class _ForthPageState extends State<ForthPage> with TickerProviderStateMixin {
   final fs.Firestore store = firestore();
   final List<Map<String, dynamic>> rewards = List();
   String _buttonState = "start";
@@ -75,7 +75,7 @@ class _ForthPageState extends State<ForthPage> {
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {});
-                Navigator.pop(context);
+                Navigator.pushNamed(context, '/third');
               },
             ),
             ListTile(
@@ -89,72 +89,76 @@ class _ForthPageState extends State<ForthPage> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _buttonState == "stop"
-              ? Center(
-                  child: CarouselSlider(
-                    height: 150.0,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(milliseconds: 500),
-                    items: rewards.map(
-                      (reward) {
-                        return Builder(
-                          builder: (BuildContext context) {
-                            return Container(
-                              constraints: BoxConstraints(
-                                maxWidth: 300.0,
-                                minWidth: 150.0,
-                              ),
-                              child: Image.asset(
-                                'images/' + reward['name'] + '.png',
-                                height: 50.0,
-                                width: 50.0,
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ).toList(),
+      body: AnimatedBackground(
+        behaviour: BubblesBehaviour(),
+        vsync: this,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buttonState == "stop"
+                ? Center(
+                    child: CarouselSlider(
+                      height: 150.0,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(milliseconds: 500),
+                      items: rewards.map(
+                        (reward) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                constraints: BoxConstraints(
+                                  maxWidth: 300.0,
+                                  minWidth: 150.0,
+                                ),
+                                child: Image.asset(
+                                  'images/' + reward['name'] + '.png',
+                                  height: 50.0,
+                                  width: 50.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ).toList(),
+                    ),
+                  )
+                : (_buttonState == "back"
+                    ? Image.asset(
+                        'images/rw1.png',
+                        height: 300.0,
+                        width: 300.0,
+                        fit: BoxFit.cover,
+                      )
+                    : Text("")),
+            Center(
+              child: Container(
+                padding: EdgeInsets.only(top: 100),
+                child: RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  textColor: Colors.white,
+                  color: Colors.amber[900],
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    _buttonState,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                )
-              : (_buttonState == "back"
-                  ? Image.asset(
-                      'images/rw1.png',
-                      height: 300.0,
-                      width: 300.0,
-                      fit: BoxFit.cover,
-                    )
-                  : Text("")),
-          Center(
-            child: Container(
-              padding: EdgeInsets.only(top: 100),
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                textColor: Colors.white,
-                color: Colors.amber[900],
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  _buttonState,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  onPressed: () => {
+                    setState(() {
+                      _buttonState = _buttonState == "start"
+                          ? "stop"
+                          : (_buttonState == "stop" ? "back" : "start");
+                    })
+                  },
                 ),
-                onPressed: () => {
-                  setState(() {
-                    _buttonState = _buttonState == "start"
-                        ? "stop"
-                        : (_buttonState == "stop" ? "back" : "start");
-                  })
-                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
