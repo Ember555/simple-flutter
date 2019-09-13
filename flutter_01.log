@@ -1,0 +1,84 @@
+Flutter crash report; please file at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter run -d chrome
+
+## exception
+
+ChromeDebugException: Unexpected error from chrome devtools:
+text: Uncaught
+exception:
+  description: ReferenceError: require is not defined
+    at <anonymous>:1:1
+  type: object
+  value: null
+attempted JS eval: `require('dart_sdk').dart.getLibraries();`
+
+
+```
+#0      handleErrorIfPresent (package:dwds/src/services/chrome_proxy_service.dart:569:5)
+#1      AppInspector._getLibraryRefs (package:dwds/src/debugging/inspector.dart:489:5)
+<asynchronous suspension>
+#2      AppInspector._initialize (package:dwds/src/debugging/inspector.dart:72:36)
+<asynchronous suspension>
+#3      AppInspector.initialize (package:dwds/src/debugging/inspector.dart:108:21)
+#4      _AsyncAwaitCompleter.start (dart:async-patch/async_patch.dart:43:6)
+#5      AppInspector.initialize (package:dwds/src/debugging/inspector.dart:84:41)
+#6      ChromeProxyService.createIsolate (package:dwds/src/services/chrome_proxy_service.dart:112:37)
+#7      _AsyncAwaitCompleter.start (dart:async-patch/async_patch.dart:43:6)
+#8      ChromeProxyService.createIsolate (package:dwds/src/services/chrome_proxy_service.dart:106:29)
+#9      DevHandler._handleConnection.<anonymous closure> (package:dwds/src/handlers/dev_handler.dart:259:15)
+#10     _asyncThenWrapperHelper.<anonymous closure> (dart:async-patch/async_patch.dart:71:64)
+#11     _rootRunUnary (dart:async/zone.dart:1132:38)
+#12     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
+#13     _FutureListener.handleValue (dart:async/future_impl.dart:137:18)
+#14     Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:678:45)
+#15     Future._propagateToListeners (dart:async/future_impl.dart:707:32)
+#16     Future._addListener.<anonymous closure> (dart:async/future_impl.dart:387:9)
+#17     _rootRun (dart:async/zone.dart:1124:13)
+#18     _CustomZone.run (dart:async/zone.dart:1021:19)
+#19     _CustomZone.runGuarded (dart:async/zone.dart:923:7)
+#20     _CustomZone.bindCallbackGuarded.<anonymous closure> (dart:async/zone.dart:963:23)
+#21     _microtaskLoop (dart:async/schedule_microtask.dart:41:21)
+#22     _startMicrotaskLoop (dart:async/schedule_microtask.dart:50:5)
+#23     _runPendingImmediateCallback (dart:isolate-patch/isolate_patch.dart:116:13)
+#24     _RawReceivePortImpl._handleMessage (dart:isolate-patch/isolate_patch.dart:173:5)
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel master, v1.10.2-pre.50, on Linux, locale en_US.UTF-8)
+    [32m•[39m Flutter version 1.10.2-pre.50 at /home/user/flutter
+    [32m•[39m Framework revision 73c10e8ced (31 hours ago), 2019-09-11 18:20:42 -0700
+    [32m•[39m Engine revision 28d7900ed7
+    [32m•[39m Dart version 2.6.0 (build 2.6.0-dev.0.0 be66176534)
+
+[32m[✓][39m Android toolchain - develop for Android devices (Android SDK version 29.0.2)
+    [32m•[39m Android SDK at /home/user/Android/Sdk
+    [32m•[39m Android NDK location not configured (optional; useful for native profiling support)
+    [32m•[39m Platform android-29, build-tools 29.0.2
+    [32m•[39m Java binary at: /home/user/android-studio/jre/bin/java
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+    [32m•[39m All Android licenses accepted.
+
+[32m[✓][39m Chrome - develop for the web
+    [32m•[39m Chrome at google-chrome
+
+[32m[✓][39m Android Studio (version 3.5)
+    [32m•[39m Android Studio at /home/user/android-studio
+    [32m•[39m Flutter plugin version 38.2.3
+    [32m•[39m Dart plugin version 191.8423
+    [32m•[39m Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+
+[32m[✓][39m VS Code (version 1.35.1)
+    [32m•[39m VS Code at /usr/share/code
+    [32m•[39m Flutter extension version 3.2.0
+
+[32m[✓][39m Connected device (2 available)
+    [32m•[39m Chrome • chrome • web-javascript • Google Chrome 71.0.3578.98
+    [32m•[39m Server • web    • web-javascript • Flutter Tools
+
+[32m•[39m No issues found!
+```

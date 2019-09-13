@@ -53,7 +53,7 @@ class _FirstPageState extends State<FirstPage> {
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {});
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, '/first');
               },
             ),
             ListTile(
@@ -65,11 +65,19 @@ class _FirstPageState extends State<FirstPage> {
               },
             ),
             ListTile(
-              title: Text('Third', style: TextStyle(fontSize: 20.0)),
+              title: Text('Draw V1', style: TextStyle(fontSize: 20.0)),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 setState(() {});
                 Navigator.pushNamed(context, '/third');
+              },
+            ),
+            ListTile(
+              title: Text('Draw V2', style: TextStyle(fontSize: 20.0)),
+              trailing: Icon(Icons.arrow_forward),
+              onTap: () {
+                setState(() {});
+                Navigator.pushNamed(context, '/forth');
               },
             ),
           ],
