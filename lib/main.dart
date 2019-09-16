@@ -8,7 +8,7 @@ import 'package:firebase/firebase.dart';
 void main() {
   // before using firebase you must import script in web/index.html
   initializeApp(
-    apiKey: "AIzaSyBdz6ZbIFA5vbrLRoyQudWntdbS0g-YhjQ",
+    apiKey: "{api_key}",
     authDomain: "lucky-draw-251307.firebaseapp.com",
     databaseURL: "https://lucky-draw-251307.firebaseio.com",
     projectId: "lucky-draw-251307",
